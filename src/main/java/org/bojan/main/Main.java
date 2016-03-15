@@ -1,40 +1,44 @@
 package org.bojan.main;
 
+import javax.transaction.Transaction;
 
-
-import org.bojan.entity.Address;
-import org.bojan.entity.Student;
+import org.bojan.entity.Professor;
+import org.bojan.entity.Subject;
 import org.bojan.util.HibernateUtil;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 public class Main {
 	
 	public static void main(String args[]){
 		
-		Student student = new Student();
-		student.setFirstName("Bojan");
-		student.setLastName("Galonja");
+		Subject subject1 = new Subject();
+		subject1.setName("Physics 1");
+		Subject subject2 = new Subject();
+		subject2.setName("Physics 2");
 		
-		
-		Address address = new Address();
-		address.setCity("City");
-		address.setHouseNum("13");
-		address.setStudent(student);
-		
-		student.setAddress(address);
+		Professor prof = new Professor();
+		prof.setFirstName("First");
+		prof.setLastName("Last");
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		sessionFactory.getCurrentSession().beginTransaction();
+		subject1.setProfessor(prof);
+		subject2.setProfessor(prof);
 		
-		Session session = sessionFactory.getCurrentSession();
+		sessionFactory.getCurrentSession().save(subject1);
+		sessionFactory.getCurrentSession().save(subject2);
+		sessionFactory.getCurrentSession().save(prof);
 		
-		session.beginTransaction();
+		prof.getSubjects().add(subject1);
+		prof.getSubjects().add(subject2);
 		
-		session.save(student);
+		for(Subject sub : prof.getSubjects()){
+			System.out.println(sub.getName());
+		}
+		System.out.println("Printed all");
 		
-		System.out.println("Student ID == " + student.getId());
+		sessionFactory.getCurrentSession().getTransaction().commit();
 		
-		session.getTransaction().commit();
 		
 		sessionFactory.close();
 		

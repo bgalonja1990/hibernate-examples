@@ -6,38 +6,29 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 
 public class HibernateUtil {
 	
 	private static SessionFactory sessionFactory;
 	
 	private static SessionFactory buildSessionAnnotationFactory(){
+		Configuration cfg = new Configuration();
+		cfg.configure("hibernate-annotation-cfg.xml");
 		
-		Configuration configuration = new Configuration();
-		
-		configuration.configure("hibernate-annotation-cfg.xml");
-		System.out.println("Configured!");
-		
-		//***NOTE
-		//SessionFactory sessionFactory = new Configuration().configure().build
-		//DEPRECATED from Hibernate 4.3.0 - using StandardServiceRegistryBuilder instead
-				
-		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-		
-		
-		SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-		
+		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
+		SessionFactory sessionFactory = cfg.buildSessionFactory(serviceRegistry);
 		return sessionFactory;
+		
 	
 	}
 	
 	public static SessionFactory getSessionFactory(){
 		
-		if (sessionFactory==null){
+		if(sessionFactory == null){
 			sessionFactory = buildSessionAnnotationFactory();
 		}
 		return sessionFactory;
-		
 	}
 	
 }

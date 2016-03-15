@@ -13,6 +13,8 @@
 		
 		<mapping class="org.bojan.entity.Student"/>
 		<mapping class="org.bojan.entity.Address"/>
+		<mapping class="org.bojan.entity.Subject"/>
+		<mapping class="org.bojan.entity.Professor"/>
 		
 	</session-factory>
 
