@@ -2,9 +2,9 @@ package org.bojan.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -15,8 +15,7 @@ import org.hibernate.annotations.Parameter;
 public class Address {
 	
 	@Id
-	@GeneratedValue(generator="gen")
-	@GenericGenerator(name="gen", strategy = "foreign", parameters={@Parameter(name="property",value="student")})
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
 	private String street;
@@ -25,16 +24,9 @@ public class Address {
 
 	private String city;
 	
-	@OneToOne
-	@PrimaryKeyJoinColumn
-	private Student student;
+	@ManyToOne
+	private Employee employee;
 	
-	public Student getStudent() {
-		return student;
-	}
-	public void setStudent(Student student) {
-		this.student = student;
-	}
 	public int getId() {
 		return id;
 	}
@@ -58,6 +50,12 @@ public class Address {
 	}
 	public void setCity(String city) {
 		this.city = city;
+	}
+	public Employee getEmployee() {
+		return employee;
+	}
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 	
 	

@@ -11,8 +11,10 @@
 		<property name="hibernate.hbm2ddl.auto">create</property>
 		<property name="hibernate.current_session_context_class">thread</property>
 		
-		<mapping class="org.bojan.entity.Student"/>
+		<mapping class="org.bojan.entity.Employee"/>
 		<mapping class="org.bojan.entity.Address"/>
+		<mapping class="org.bojan.entity.FullTimeEmployee"/>
+		<mapping class="org.bojan.entity.PartTimeEmployee"/>
 		
 	</session-factory>
 
