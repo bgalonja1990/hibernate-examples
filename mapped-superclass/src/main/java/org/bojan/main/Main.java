@@ -2,6 +2,9 @@ package org.bojan.main;
 
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bojan.entity.Address;
 import org.bojan.entity.Student;
 import org.bojan.util.HibernateUtil;
@@ -22,7 +25,16 @@ public class Main {
 		address.setHouseNum("13");
 		address.setStudent(student);
 		
-		student.setAddress(address);
+		Address address2 = new Address();
+		address2.setCity("City");
+		address2.setHouseNum("234");
+		address2.setStudent(student);
+		
+		Set<Address> addresses = new HashSet<Address>();
+		addresses.add(address);
+		addresses.add(address2);
+		
+		student.setAddress(addresses);
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		
