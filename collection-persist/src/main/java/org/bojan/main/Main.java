@@ -34,8 +34,8 @@ public class Main {
 		e2.setFirstName("firstName2");
 		e2.setLastName("lastName2");
 		
-		e2.setHomeAdress(address);
-		e2.setOfficeAddress(address2);
+		e1.getAddresses().add(address);
+		e1.getAddresses().add(address);
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		
