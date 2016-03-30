@@ -4,6 +4,7 @@ package org.bojan.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,6 +17,7 @@ import javax.persistence.TemporalType;
 public class EmployeeDepartment {
 	
 	@Id
+	@GeneratedValue
 	private long row_id;
 	
 	@Temporal(TemporalType.DATE)
