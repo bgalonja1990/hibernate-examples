@@ -1,11 +1,14 @@
 package org.bojan.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
@@ -20,7 +23,7 @@ public class Student {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	@Column(name="FIRST_NAME")
 	private String firstName;
@@ -28,15 +31,18 @@ public class Student {
 	@Column(name="LAST_NAME")
 	private String lastName;
 	
-	@OneToOne(mappedBy="student")
-	@Cascade(value=CascadeType.SAVE_UPDATE)
-	private Address address;
+	@OneToMany(mappedBy="student")
+	@Cascade(value=CascadeType.ALL)
+	@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+	private List<Address> addresses = new ArrayList<Address>();
 	
-	public int getId() {
+	
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -56,13 +62,14 @@ public class Student {
 		this.lastName = lastName;
 	}
 
-	public Address getAddress() {
-		return address;
+	public List<Address> getAddresses() {
+		return addresses;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
 	}
+
 	
 	
 	

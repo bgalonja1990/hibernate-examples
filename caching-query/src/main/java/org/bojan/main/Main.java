@@ -33,7 +33,9 @@ public class Main {
 		address3.setHouseNum("15");
 		address3.setStudent(student);
 		
-		student.setAddress(address);
+		student.getAddresses().add(address);
+		student.getAddresses().add(address2);
+		student.getAddresses().add(address3);
 		
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		
@@ -50,13 +52,20 @@ public class Main {
 		Session session2 = sessionFactory.openSession();
 		session2.beginTransaction();
 		Student s = (Student)session2.load(Student.class, 1);
-		System.out.println("Loaded student of id: " +student.getId() );
+		System.out.println("Loaded student of id: " +s.getId() );
 		Student s2 = (Student)session2.load(Student.class, 1);
-		System.out.println("Loaded student of id: " +student.getId() );
+		System.out.println("Loaded student of id: " +s2.getId() );
 		session2.getTransaction().commit();
 		
 		Session session3 = sessionFactory.openSession();
-		session3.createCriteria(Address.class).add(Restrictions.eq("student", s.getId())).list();
+		session3.beginTransaction();
+		session3.createCriteria(Address.class).add(Restrictions.eq("student", s)).setCacheable(true).list();
+		session3.getTransaction().commit();
+		
+		Session session4 = sessionFactory.openSession();
+		session4.beginTransaction();
+		session4.createCriteria(Address.class).add(Restrictions.eq("student", s)).list();
+		session4.getTransaction().commit();
 		
 		sessionFactory.close();
 		
